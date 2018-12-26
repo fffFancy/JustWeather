@@ -12,7 +12,13 @@
         android:textSize="20sp"/>
     
     <TextView
-        android:layout_width=""
-        android:layout_height="" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_update_time"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="#fff"
+        android:textSize="16sp"/>
 
 </RelativeLayout>
