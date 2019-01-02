@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.example.eve.justweather.db.City;
 import com.example.eve.justweather.db.County;
 import com.example.eve.justweather.db.Province;
+import com.example.eve.justweather.gson.Weather;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,6 +84,24 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    /**
+     * 将返回的json数据解析成Weather实体类
+     */
+    public static Weather handleWeatherResponse (String response) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            //已经定义过相应的GSON实体类，只需要通过fromJson()方法即可将json数据转化成Weather对象
+            return new Gson().fromJson(weatherContent, Weather.class);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
