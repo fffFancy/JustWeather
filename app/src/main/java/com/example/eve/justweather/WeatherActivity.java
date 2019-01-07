@@ -75,6 +75,7 @@ public class WeatherActivity extends AppCompatActivity {
         else {
             //无缓存时去服务器查询天气
             String weatherId = getIntent().getStringExtra("weather_id");
+            //无数据时先将ScrollVIew隐藏，不然空数据的界面看上去很奇怪
             weatherLayout.setVisibility(View.INVISIBLE);
             requestWeather(weatherId);
         }
@@ -113,6 +114,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     edit();
                             editor.putString("weather", responseText);
                             editor.apply();
+                            showWeatherInfo(weather);
                         }
                         else {
                             Toast.makeText(WeatherActivity.this,"获取天气信息失败",
@@ -150,9 +152,21 @@ public class WeatherActivity extends AppCompatActivity {
 
             dateText.setText(forecast.date);
             infoText.setText(forecast.more.info);
-
+            maxText.setText(forecast.temperature.max);
+            minText.setText(forecast.temperature.min);
+            forecastLayout.addView(view);
         }
-
+        if (weather.aqi!=null) {
+            aqiText.setText(weather.aqi.city.aqi);
+            pm25Text.setText(weather.aqi.city.pm25);
+        }
+        String comfort = "舒适度: " + weather.suggestion.comfort.info;
+        String carwash = "洗车指数: " + weather.suggestion.carWash.info;
+        String sport = "运动建议："+ weather.suggestion.sport.info;
+        comfortText.setText(comfort);
+        carWashText.setText(carwash);
+        sportText.setText(sport);
+        weatherLayout.setVisibility(View.VISIBLE);
     }
 }
 
